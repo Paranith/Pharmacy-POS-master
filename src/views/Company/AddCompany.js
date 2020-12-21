@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CompanyService from '../../Service/CompanyService';
 
 export default class AddCompany extends Component {
     constructor() {
@@ -9,11 +10,11 @@ export default class AddCompany extends Component {
             DoorNumber: "",
             StreetName: "",
             City: "",
-            Telephone: "",
+            ownerName: "",
             Mobile: "",
             Email: "",
-            Logo: "",
-            Website: ""
+            ownerNic: "",
+            // Website: ""
         }
     }
 
@@ -24,13 +25,31 @@ export default class AddCompany extends Component {
         console.log("name ", name);
     }
 
+    addCompany = (event) => {
+        event.preventDefault();
+        let company = {
+            companyName: this.state.CompanyName,
+            ownerName: this.state.ownerName,
+            ownerNic: this.state.ownerNic,
+            email: this.state.Email,
+            mob: this.state.Mobile,
+            addr1: this.state.DoorNumber,
+            addr2: this.state.StreetName,
+            addr3: this.state.City,
+        };
+        CompanyService.addCompany(company)
+        .then(res => {
+
+        })
+    }
+
     render() {
         return (
             <>
-                <form>
+                <form onSubmit={this.addCompany}>
                     <h3><u>Manage Company</u></h3> <br />
-                    <div class="row">
-                        <div class="col-sm">
+                    <div className="row">
+                        <div className="col-sm">
                             <label>Company name</label> &nbsp;&nbsp;
 
 
@@ -44,15 +63,15 @@ export default class AddCompany extends Component {
                             />&nbsp;&nbsp;&nbsp;&nbsp;   <br />
 
 
-                            <label>Telephone Number</label> &nbsp;&nbsp;
+                            <label>Owner Name</label> &nbsp;&nbsp;
 
 
                             <input
                                 className="form-control"
                                 type="text"
                                 style={{ padding: 5, width: "85%" }}
-                                value={this.state.Telephone}
-                                onChange={this.onChangeValue("Telephone")}
+                                value={this.state.ownerName}
+                                onChange={this.onChangeValue("ownerName")}
                             /><br />
 
 
@@ -92,7 +111,7 @@ export default class AddCompany extends Component {
                             /><br />
                         </div>
 
-                        <div class="col-sm">
+                        <div className="col-sm">
 
                             <label>Mobile Number</label> &nbsp;&nbsp;
 
@@ -119,7 +138,7 @@ export default class AddCompany extends Component {
                                 onChange={this.onChangeValue("Email")}
                             /><br />
 
-                            <label>Website</label> &nbsp;&nbsp;
+                            {/* <label>Website</label> &nbsp;&nbsp;
 
                             <input
                                 className="form-control"
@@ -127,16 +146,16 @@ export default class AddCompany extends Component {
                                 style={{ padding: 5, width: "85%" }}
                                 value={this.state.Website}
                                 onChange={this.onChangeValue("Website")}
-                            /><br />
+                            /><br /> */}
 
-                            <label>Logo</label> <br />
+                            <label>Owner NIC</label> <br />
 
                             <input
                                 style={{ padding: 5, width: "85%" }}
-                                className="btn btn-secondary"
-                                type="file"
-                                value={this.state.Logo}
-                                onChange={this.onChangeValue("Logo")}
+                                className="form-control"
+                                type="text"
+                                value={this.state.ownerNic}
+                                onChange={this.onChangeValue("ownerNic")}
                             />
 
                             <div style={{ padding: 20, marginTop: 20 }}>
