@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BranchService from '../../Service/BranchService';
 import ManageBranches from './ManageBranches'
 
 export default class AddBranch extends Component {
@@ -10,7 +11,9 @@ export default class AddBranch extends Component {
             code:"",
             doornumber:"",
             streetname:"",
-            city:""
+            city:"",
+            companyId:"1001",
+            mobile:""
         }
     }
 
@@ -21,9 +24,29 @@ export default class AddBranch extends Component {
         console.log("name ", name);
     }
 
+    AddBranch = (event) => {
+        event.preventDefault();
+        let branch = {
+            branchName : this.state.name,
+            mobile : this.state.mobile,
+            addr1 : this.state.doornumber,
+            addr2 : this.state.streetname,
+            addr3 : this.state.city,
+            code : this.state.code,
+            companyId : this.state.companyId,
+        }
+        BranchService.addBranch(branch)
+        .then((res => {
+
+        }))
+    }
+
     render() {
         return (
             <>
+            <form
+            onSubmit={this.AddBranch}
+            >
             <div className="row">
             <div className="col-sm">
                 <label>Name</label>
@@ -34,6 +57,15 @@ export default class AddBranch extends Component {
                     value={this.state.name}
                     onChange={this.onChangeValue("name")}
                 /> <br/>
+
+                <label>Mobile Number</label>
+                <input
+                    className="form-control"
+                    type="text"
+                    style={{ padding: 5, width: "85%" }}
+                    value={this.state.mobile}
+                    onChange={this.onChangeValue("mobile")}
+                /><br/>
 
                 <label>Code</label>
                 <input
@@ -89,6 +121,7 @@ export default class AddBranch extends Component {
                     <button className="btn btn-danger">Cancel</button>
             </div>
             <br/><br/>
+            </form>
             <ManageBranches/>
             </>
         );

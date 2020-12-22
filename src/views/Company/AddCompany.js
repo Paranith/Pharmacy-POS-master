@@ -138,15 +138,6 @@ export default class AddCompany extends Component {
                                 onChange={this.onChangeValue("Email")}
                             /><br />
 
-                            {/* <label>Website</label> &nbsp;&nbsp;
-
-                            <input
-                                className="form-control"
-                                type="text"
-                                style={{ padding: 5, width: "85%" }}
-                                value={this.state.Website}
-                                onChange={this.onChangeValue("Website")}
-                            /><br /> */}
 
                             <label>Owner NIC</label> <br />
 
