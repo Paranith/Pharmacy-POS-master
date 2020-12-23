@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import EmployeeService from '../../Service/EmployeeService';
 
 export default class AddEmployee extends Component{
     constructor(){
@@ -38,10 +39,46 @@ export default class AddEmployee extends Component{
         console.log("name ", name);
     }
 
+    addEmployee = (event) =>{
+        event.preventDefault();
+
+        let employee = {
+
+            firstName : this.state.firstname,
+            middleName : this.state.middlename,
+            lastName : this.state.lastname,
+            nic : this.state.nic,
+            email : this.state.email,
+            gender : this.state.gender,
+            dateOfBirth : this.state.dob,
+            userName : this.state.username,
+            joinedDate : this.state.datejoined,
+            joinedPosition : this.state.joinedposition,
+            branchId : this.state.branchid,
+            companyId : this.state.companyid,
+            report : this.state.Reports,
+            doorNumber : this.state.doornumber,
+            streetName : this.state.streetname,
+            city : this.state.city,
+            landlineNumber : this.state.landlinenumber,
+            mobileNumber : this.state.mobilenumber,
+            nameofImmidiateContact : this.state.emergencyContactname,
+            immidiateContactnumber : this.state.emergencyContactmobilenumber,
+            relationshipwithImmidiateContact : this.state.relationshiptoecp,
+
+        };
+
+        EmployeeService.addEmployee(employee)
+        .then(res=>{
+
+        })
+    } 
+
     render(){
         return(
             <>
             <h3>Add Employee</h3>
+            <form onSubmit={this.addEmployee}>
             <div className="row">
             <div className="col-sm">
             <label>First Name</label>
@@ -107,14 +144,12 @@ export default class AddEmployee extends Component{
                     onChange={this.onChangeValue("dob")}
                 /> <br/>
             <label>Gender :</label>
-            <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios"  value={this.state.gender}  onChange={this.onChangeValue("gender")}/>
+            <div class="form-check" value={this.state.gender}  onChange={this.onChangeValue("gender")}>
+            <input class="form-check-input" type="radio" name="exampleRadios" value="male" />
             <label class="form-check-label" for="exampleRadios1">
                 Male
-            </label>
-            </div>
-            <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" value={this.state.gender} onChange={this.onChangeValue("gender")}/>
+            </label><br/>
+            <input class="form-check-input" type="radio" name="exampleRadios" value="female"/>
             <label class="form-check-label" for="exampleRadios2">
                 Female
             </label>
@@ -254,7 +289,7 @@ export default class AddEmployee extends Component{
                 <button type="submit" className="btn btn-success">Add Employee</button>&nbsp;&nbsp;
                 <button className="btn btn-danger">Cancel</button>
             </div>
-                
+            </form>  
             </>
         );
     }
