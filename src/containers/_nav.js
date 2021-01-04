@@ -30,6 +30,28 @@ export default [
     icon: 'cil-calculator',
   },
   {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Manage Categories',
+    icon: 'cil-puzzle',  
+     _children: [     
+    {
+      _tag: 'CSidebarNavItem',
+            name: 'Manage Main Category',
+            to: '/managemaincategory',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+            name: 'Manage Secondary Category',
+            to: '/manageSecondCategory',
+    },
+    {
+      _tag: 'CSidebarNavItem',
+            name: 'Manage Third Category',
+            to: '/manageThirdCategory',
+    }
+  ]
+  },
+  {
     _tag: 'CSidebarNavItem',
     name: 'Dashboard',
     to: '/dashboard',

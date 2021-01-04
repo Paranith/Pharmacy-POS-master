@@ -1,4 +1,5 @@
 import React from 'react';
+import AddCategory01 from './views/categories/mainCategory/AddMainCategory';
 
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
 const Tables = React.lazy(() => import('./views/base/tables/Tables'));
@@ -42,6 +43,12 @@ const ManageBranches = React.lazy(() => import('./views/Branches/ManageBranches'
 const AddBranch = React.lazy(() => import('./views/Branches/AddBranch'));
 const AddEmployee = React.lazy(() => import('./views/Employee/AddEmployee'));
 const ManageEmployee = React.lazy(() => import('./views/Employee/ManageEmployee'));
+const AddMainCategory = React.lazy(() => import('./views/categories/mainCategory/AddMainCategory'));
+const ManageSecondCategory = React.lazy(() => import('./views/categories/secondCategory/ManageSecondCategory'));
+const ManageThirdCategory = React.lazy(() => import('./views/categories/ThirdCategory/ManageThirdCategory'));
+const ManageMainCat = React.lazy(() => import('./views/categories/mainCategory/ManageMainCat'));
+const AddSecondCategory = React.lazy(() => import('./views/categories/secondCategory/AddSecondCategory'));
+const AddThirdCategory = React.lazy(() => import('./views/categories/ThirdCategory/AddThirdCategory'));
 
 
 const routes = [
@@ -52,6 +59,14 @@ const routes = [
   { path: '/addbranch', name:'Add Branch', component: AddBranch},
   { path: '/addEmployee', name: 'Add Employee', component: AddEmployee },
   { path: '/manageemployees', name: 'Manage Employee', component: ManageEmployee },
+  { path: '/addMainCategory', name: 'Add Main Categories', component: AddMainCategory },
+  { path: '/managemaincategory', name: 'Manage Main Categories', component: ManageMainCat },
+  { path: '/manageSecondCategory', name: 'Manage Secondary Categories', component: ManageSecondCategory },
+  { path: '/addsecondcategory', name: 'Add Secondary Categories', component: AddSecondCategory },
+  { path: '/manageThirdCategory', name: 'manage Third Categories', component: ManageThirdCategory },
+  { path: '/addthirdcategory', name: 'Add Third Categories', component: AddThirdCategory },
+  { path: '/updateCat01:id', name: 'Update Main Category', component: AddMainCategory },
+  {path: '/updateCat02/:id', name: 'Update Secondary Category', component: AddSecondCategory},
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

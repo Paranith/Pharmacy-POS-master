@@ -7,7 +7,8 @@ export default class ManageBranches extends Component {
 
         this.state={
             branches:[],
-            search:""
+            search:"",
+            // status:false
         }
     }
 
@@ -18,6 +19,8 @@ export default class ManageBranches extends Component {
                 branches:res.data
             })
         })
+
+
     }
 
     onchangeSearch = e => {
