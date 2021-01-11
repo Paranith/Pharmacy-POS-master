@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MainCategoryLog from '../../../Service/ActivityLog/MainCategoryLog';
 import Cat01Service from '../../../Service/Categories/Cat01Service';
 
 const style = {
@@ -63,10 +64,22 @@ export default class AddCategory01 extends Component{
             status: this.state.status
         }
         Cat01Service.addCat01(Cat01)
-        .then( {
-            message:"Category Added Successfully"
+        .then(res => {
+            this.addMaincatLog();
         })
     }
+
+    addMaincatLog = (e) => {
+        let MainCatLog = {
+            description:"Main Category "+this.state.catoneName+" has been added",
+            function:"Adding Main Category ",
+            userId:1,
+            pcName:"pc01"
+        }
+        MainCategoryLog.MainCatLog(MainCatLog)
+        .then(response => {
+        })
+    };
 
     render(){
         return(

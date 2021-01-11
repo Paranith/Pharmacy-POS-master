@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch } from "react-switch";
+import MainCategoryLog from "../../../Service/ActivityLog/MainCategoryLog";
 import Cat01Service from "../../../Service/Categories/Cat01Service";
 
 const style = {
@@ -72,8 +73,9 @@ export default class ManageMainCat extends Component{
             status: false
         }
         Cat01Service.addCat01(Cat01)
-        .then( {
-            // message:"Category Added Successfully"
+        .then(res => {
+            this.addMainCatLogDeactivated();
+            
         })
         window.location.reload();
     }
@@ -87,8 +89,9 @@ export default class ManageMainCat extends Component{
             status: true
         }
         Cat01Service.addCat01(Cat01)
-        .then( {
-            // message:"Category Added Successfully"
+        .then(res => {
+            this.addMainCatLogActivated();
+            
         })
         window.location.reload();
     }
@@ -106,6 +109,28 @@ export default class ManageMainCat extends Component{
           console.log(this.state.id);
         })
       }
+
+    addMainCatLogActivated = (e) => {
+        let MainCat1 = {
+            description:"Category "+this.state.name+" has been Activated",
+            function:"Activating Category 01",
+            userId:1,
+            pcName:"pc01"
+        }
+        MainCategoryLog.MainCatLog(MainCat1)
+        .then(response => {})
+    };
+
+    addMainCatLogDeactivated = (e) => {
+        let MainCat = {
+            description:"Category "+this.state.name+" has been Deactivated",
+            function:"Deactivating Category 01",
+            userId:1,
+            pcName:"pc01"
+        }
+        MainCategoryLog.MainCatLog(MainCat)
+        .then(response => {})
+    };
 
     render(){
 

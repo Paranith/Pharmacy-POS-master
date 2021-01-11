@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CompanyLogService from '../../Service/ActivityLog/CompanyLogService';
 import CompanyService from '../../Service/CompanyService';
 
 export default class AddCompany extends Component {
@@ -39,9 +40,22 @@ export default class AddCompany extends Component {
         };
         CompanyService.addCompany(company)
         .then(res => {
-
+            this.addCompanyLog();
+            
         })
     }
+    addCompanyLog = (e) => {
+        let AddCompany = {
+            description:"Company "+this.state.CompanyName+" has been added",
+            function:"Adding Company",
+            userId:1,
+            pcName:"pc01"
+        }
+        CompanyLogService.AddCompanyLog(AddCompany)
+        .then(response => {})
+    };
+
+    
 
     render() {
         return (

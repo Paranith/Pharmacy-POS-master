@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EmployeeLogService from '../../Service/ActivityLog/EmployeeLogService';
 import EmployeeService from '../../Service/EmployeeService';
 
 export default class AddEmployee extends Component{
@@ -26,9 +27,7 @@ export default class AddEmployee extends Component{
             mobilenumber:"",
             emergencyContactname:"",
             emergencyContactmobilenumber:"",
-            relationshiptoecp:"",
-
-
+            relationshiptoecp:""
         }
     }
 
@@ -70,9 +69,20 @@ export default class AddEmployee extends Component{
 
         EmployeeService.addEmployee(employee)
         .then(res=>{
-
+            this.addEmployeeLog();
         })
-    } 
+    }
+
+    addEmployeeLog = (e) => {
+        let EmployeeLog = {
+            description:"Employee "+this.state.lastname+" has been added",
+            function:"Adding Employee",
+            userId:1,
+            pcName:"pc01"
+        }
+        EmployeeLogService.EmployeeAddedLog(EmployeeLog)
+        .then(response => {})
+    };
 
     render(){
         return(

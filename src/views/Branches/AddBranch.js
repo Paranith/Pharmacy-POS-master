@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BranchLogService from '../../Service/ActivityLog/BranchLogService';
 import BranchService from '../../Service/BranchService';
 import ManageBranches from './ManageBranches'
 
@@ -37,9 +38,20 @@ export default class AddBranch extends Component {
         }
         BranchService.addBranch(branch)
         .then((res => {
-
+            this.addBranchLog();
         }))
     }
+
+    addBranchLog = (e) => {
+        let BranchLog = {
+            description:"Branch "+this.state.name+" has been added",
+            function:"Adding Branch",
+            userId:1,
+            pcName:"pc01"
+        }
+        BranchLogService.BranchAddedLog(BranchLog)
+        .then(response => {})
+    };
 
     render() {
         return (

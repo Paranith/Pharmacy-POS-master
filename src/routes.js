@@ -67,6 +67,7 @@ const routes = [
   { path: '/addthirdcategory', name: 'Add Third Categories', component: AddThirdCategory },
   { path: '/updateCat01:id', name: 'Update Main Category', component: AddMainCategory },
   {path: '/updateCat02/:id', name: 'Update Secondary Category', component: AddSecondCategory},
+  { path: '/updateCat03/:id', name: 'Update Third Category', component: AddThirdCategory },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

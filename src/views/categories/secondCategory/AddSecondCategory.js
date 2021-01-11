@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import SecondaryCategoryLog from '../../../Service/ActivityLog/SecondaryCategoryLog';
 import Cat01Service from '../../../Service/Categories/Cat01Service';
 import Cat02Service from '../../../Service/Categories/Cat02Service';
 
@@ -74,8 +75,22 @@ export default class AddSecondCategory extends Component {
             status:this.state.status
         }
         Cat02Service.addCat02(Cat02)
-        .then()
+        .then((res => {
+            this.addCat02Log();
+        }))
     }
+
+    addCat02Log = (e) => {
+        let Cat02Log = {
+            description:"Second Category "+this.state.cattwoName+" has been added",
+            function:"Adding Second Category",
+            userId:1,
+            pcName:"pc01"
+        }
+        SecondaryCategoryLog.AddSecondCat(Cat02Log)
+        .then(response => {})
+    };
+
 
     render(){
         const {Cat01} = this.state
