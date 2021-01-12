@@ -8,14 +8,47 @@ export default class AddBranch extends Component {
         super();
 
         this.state = {
+            id:"",
             name:"",
             code:"",
             doornumber:"",
             streetname:"",
             city:"",
             companyId:"1001",
-            mobile:""
+            mobile:"",
+            update:false
         }
+    }
+
+    componentDidMount(){
+        const BranchId = this.props.match.params.id;
+        if(BranchId){
+            this.loadBranch(BranchId)
+        }
+        const path = window.location.pathname;
+
+        if(path == "/updateBranch/"+BranchId){
+            this.setState({
+                update:true
+            })
+        }
+    }
+
+    loadBranch = (BranchId) => {
+        BranchService.getBranchById(BranchId)
+        .then((res) => {
+            let Branch = res.data;
+            this.setState({
+                id:Branch.id,
+                name:Branch.branchName,
+                code:Branch.code,
+                doornumber:Branch.addr1,
+                streetname:Branch.addr2,
+                city:Branch.addr3,
+                companyId:Branch.companyId,
+                mobile:Branch.mobile
+            })
+        })
     }
 
     onChangeValue = name => (e) => {
@@ -59,6 +92,10 @@ export default class AddBranch extends Component {
             <form
             onSubmit={this.AddBranch}
             >
+            {this.state.update ? 
+            (<h3>Update Branch</h3>)
+            :
+            (<h3>Add New Branch</h3>)}
             <div className="row">
             <div className="col-sm">
                 <label>Name</label>
@@ -129,7 +166,9 @@ export default class AddBranch extends Component {
             </div>
             </div>
             <div style={{ padding: 20, marginTop: 20 }}>
-                    <button type="submit" className="btn btn-success">Add</button>&nbsp;&nbsp;
+                {this.state.update ?
+                (<button type="submit" className="btn btn-success">Update</button>):
+                    (<button type="submit" className="btn btn-success">Add</button>)}&nbsp;&nbsp;
                     <button className="btn btn-danger">Cancel</button>
             </div>
             <br/><br/>

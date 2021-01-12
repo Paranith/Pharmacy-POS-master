@@ -18,7 +18,9 @@ export default class AddCategory01 extends Component{
             catoneDescription:"",
             status:1,
             message:"",
-            update:false
+            update:false,
+            CatOne:[],
+            Changed:[]
         }
     }
 
@@ -39,11 +41,12 @@ export default class AddCategory01 extends Component{
     loadCategory = (Cat01Id) => {
         Cat01Service.getCat01ById(Cat01Id)
         .then((res) => {
-          let cat = res.data;
+          let Cat01 = res.data;
           this.setState({
-            id:cat.id,
-            catoneName:cat.name,
-            catoneDescription:cat.description 
+            CatOne:Cat01,
+            id:Cat01.id,
+            catoneName:Cat01.name,
+            catoneDescription:Cat01.description 
           })
         })
       }
@@ -58,7 +61,7 @@ export default class AddCategory01 extends Component{
     saveCategory= (event) =>{
         event.preventDefault();
         let Cat01 = {
-            id:this.state.id,
+            // id:this.state.id,
             name:this.state.catoneName,
             description:this.state.catoneDescription,
             status: this.state.status
@@ -66,6 +69,30 @@ export default class AddCategory01 extends Component{
         Cat01Service.addCat01(Cat01)
         .then(res => {
             this.addMaincatLog();
+        })
+    }
+
+    UpdateCategory= (event) =>{
+        event.preventDefault();
+
+        if(this.state.CatOne.name !== this.state.catoneName){
+            this.state.Changed.push("Name")
+        }
+        if(this.state.CatOne.description !== this.state.catoneDescription){
+            this.state.Changed.push("Description")
+        } else {
+            this.state.Changed.push("nothing")
+        }
+
+        let Cat01 = {
+            id:this.state.id,
+            name:this.state.catoneName,
+            description:this.state.catoneDescription,
+            status: this.state.status
+        }
+        Cat01Service.addCat01(Cat01)
+        .then(res => {
+            this.UpdateMaincatLog();
         })
     }
 
@@ -81,11 +108,24 @@ export default class AddCategory01 extends Component{
         })
     };
 
+    UpdateMaincatLog = (e) => {
+        let MainCatLog = {
+            description:"Main Category's "+this.state.Changed+" has been Updated",
+            function:"Updating Main Category ",
+            userId:1,
+            pcName:"pc01"
+        }
+        MainCategoryLog.MainCatLog(MainCatLog)
+        .then(response => {
+        })
+        window.location.reload();
+    };
+
     render(){
         return(
             <>
             <div>
-            <form onSubmit={this.saveCategory}>
+            <form>
                 {this.state.update ? 
                 (<h3>Update Category 01(Main Category)</h3>)
                 :
@@ -109,10 +149,10 @@ export default class AddCategory01 extends Component{
                 onChange={this.onChangeValue("catoneDescription")}
                 /><br/>
                 {this.state.update ? 
-                (<button type="submit" className="btn btn-info">Update</button>)
+                (<button type="submit" className="btn btn-info" onClick={this.UpdateCategory}>Update</button>)
                 :
                 (
-                    <button type="submit" className="btn btn-success">Add</button> 
+                    <button type="submit" className="btn btn-success" onClick={this.saveCategory}>Add</button> 
                 )}&nbsp;
                 <button className="btn btn-danger">Cancel</button>
                 {this.state.message && (

@@ -23,7 +23,6 @@ export default class AddCompany extends Component {
         this.setState({
             [name]: e.target.value
         });
-        console.log("name ", name);
     }
 
     addCompany = (event) => {

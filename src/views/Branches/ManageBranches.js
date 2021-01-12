@@ -49,27 +49,29 @@ export default class ManageBranches extends Component {
                 />
                 <i className="cil-magnifying-glass"></i>
                 <br/><br/>
-            <table class="table table-sm">
+            <table class="table table-bordered table">
                 <thead>
                     <tr>
-                    {/* <th scope="col">No</th> */}
-                    <th scope="col">Name</th>
-                    <th scope="col">Mobile Number</th>
-                    <th scope="col">Door No</th>
-                    <th scope="col">Street Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Code</th>
+                    <th>Name</th>
+                    <th>Mobile Number</th>
+                    <th>Door No</th>
+                    <th>Street Name</th>
+                    <th>City</th>
+                    <th>Code</th>
+                    <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filterbranches.map((row) => (
-                        <tr>
+                        <tr key={row.id}>
                             <td>{row.branchName}</td>
                             <td>{row.mobile}</td>
                             <td>{row.addr1}</td>
                             <td>{row.addr2}</td>
                             <td>{row.addr3}</td>
                             <td>{row.code}</td>
+                            <td><a href={"/updateBranch/"+row.id}><button  className="btn btn-success">Edit</button></a></td>
+
                         </tr>
                     ))}
                     
