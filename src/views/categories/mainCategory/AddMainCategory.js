@@ -20,7 +20,9 @@ export default class AddCategory01 extends Component{
             message:"",
             update:false,
             CatOne:[],
-            Changed:[]
+            Changed:[],
+            messageStatus:false,
+            message:""
         }
     }
 
@@ -34,7 +36,13 @@ export default class AddCategory01 extends Component{
 
         if (path == "/updateCat01"+Cat01Id){
             this.setState({
-                 update:true })
+                update : true,
+                message : "Main Category updated successfully"
+                })
+        }else {
+            this.setState({
+                message : "Main Category added Successfully"
+            })
         }
     }
 
@@ -69,6 +77,13 @@ export default class AddCategory01 extends Component{
         Cat01Service.addCat01(Cat01)
         .then(res => {
             this.addMaincatLog();
+            this.setState({
+                messageStatus:true
+            });
+            setTimeout(() => {
+                this.setState({ messageStatus: false });
+                this.props.history.push("/managemaincategory")
+              }, 3000);
         })
     }
 
@@ -93,6 +108,13 @@ export default class AddCategory01 extends Component{
         Cat01Service.addCat01(Cat01)
         .then(res => {
             this.UpdateMaincatLog();
+            this.setState({
+                messageStatus:true
+            });
+            setTimeout(() => {
+                this.setState({ messageStatus: false });
+                this.props.history.push("/managemaincategory")
+              }, 3000);
         })
     }
 
@@ -155,8 +177,8 @@ export default class AddCategory01 extends Component{
                     <button type="submit" className="btn btn-success" onClick={this.saveCategory}>Add</button> 
                 )}&nbsp;
                 <button className="btn btn-danger">Cancel</button>
-                {this.state.message && (
-                    <div>
+                {this.state.messageStatus && (
+                    <div className="alert alert-success" role="alert">
                     {this.state.message}
                 </div>
                 )}

@@ -49,6 +49,8 @@ const ManageThirdCategory = React.lazy(() => import('./views/categories/ThirdCat
 const ManageMainCat = React.lazy(() => import('./views/categories/mainCategory/ManageMainCat'));
 const AddSecondCategory = React.lazy(() => import('./views/categories/secondCategory/AddSecondCategory'));
 const AddThirdCategory = React.lazy(() => import('./views/categories/ThirdCategory/AddThirdCategory'));
+const AddItem = React.lazy(() => import('./views/Item/AddItem'));
+const ManageItems = React.lazy(() => import("./views/Item/ManageItems"));
 
 
 const routes = [
@@ -59,6 +61,7 @@ const routes = [
   { path: '/addbranch', name:'Add Branch', component: AddBranch},
   { path: '/updateBranch/:id', name: 'Update Branch Category', component: AddBranch },
   { path: '/addEmployee', name: 'Add Employee', component: AddEmployee },
+  { path: '/updateEmp/:id', name: 'Update Employee', component: AddEmployee },
   { path: '/manageemployees', name: 'Manage Employee', component: ManageEmployee },
   { path: '/addMainCategory', name: 'Add Main Categories', component: AddMainCategory },
   { path: '/managemaincategory', name: 'Manage Main Categories', component: ManageMainCat },
@@ -69,6 +72,9 @@ const routes = [
   { path: '/updateCat01:id', name: 'Update Main Category', component: AddMainCategory },
   { path: '/updateCat02/:id', name: 'Update Secondary Category', component: AddSecondCategory},
   { path: '/updateCat03/:id', name: 'Update Third Category', component: AddThirdCategory },
+  { path: '/additem', name:'Add Item', component: AddItem },
+  { path: '/manageitems', name: 'Manage Items', component: ManageItems },
+  { path: '/updateItems/:id', name: 'Update Items', component: AddItem },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

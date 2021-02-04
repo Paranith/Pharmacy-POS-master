@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BranchLogService from '../../Service/ActivityLog/BranchLogService';
 import EmployeeLogService from '../../Service/ActivityLog/EmployeeLogService';
 import EmployeeService from '../../Service/EmployeeService';
 
@@ -7,6 +8,7 @@ export default class AddEmployee extends Component{
         super();
 
         this.state = {
+            id:"",
             firstname:"",
             middlename:"",
             lastname:"",
@@ -27,8 +29,65 @@ export default class AddEmployee extends Component{
             mobilenumber:"",
             emergencyContactname:"",
             emergencyContactmobilenumber:"",
-            relationshiptoecp:""
+            relationshiptoecp:"",
+            update:false,
+            Emp:[],
+            Changed:[], 
+            message:"",
+            messageStatus:false
         }
+    }
+
+    componentDidMount(){
+        const EmpId = this.props.match.params.id;
+
+        if(EmpId){
+            this.loadEmployee(EmpId)
+        }
+        const path = window.location.pathname;
+
+        if(path == "/updateEmp/"+EmpId){
+            this.setState({
+                update:true,
+                message : "Employee updated successfully!"
+            })
+        }else {
+            this.setState({
+                message : "Employee added successfully"
+            })
+        }
+    }
+
+    loadEmployee = (EmpId) => {
+        EmployeeService.getEmployeeById(EmpId)
+        .then((res) => {
+            let Employee = res.data;
+            this.setState({
+            Emp:Employee,
+            id:Employee.id,
+            firstname:Employee.firstName,
+            middlename:Employee.middleName,
+            lastname:Employee.lastName,
+            nic:Employee.nic,
+            username:Employee.userName,
+            email:Employee.email,
+            gender:Employee.gender,
+            dob:Employee.dateOfBirth,
+            datejoined:Employee.joinedDate,
+            joinedposition:Employee.joinedPosition,
+            branchid:Employee.branchId,
+            companyid:Employee.companyId,
+            Reports:Employee.report,
+            doornumber:Employee.doorNumber,
+            streetname:Employee.streetName,
+            city:Employee.city,
+            landlinenumber:Employee.landlineNumber,
+            mobilenumber:Employee.mobileNumber,
+            emergencyContactname:Employee.nameofImmidiateContact,
+            emergencyContactmobilenumber:Employee.immidiateContactnumber,
+            relationshiptoecp:Employee.relationshipwithImmidiateContact
+            })
+        })
     }
 
     onChangeValue = name => (e) => {
@@ -70,6 +129,13 @@ export default class AddEmployee extends Component{
         EmployeeService.addEmployee(employee)
         .then(res=>{
             this.addEmployeeLog();
+            this.setState({
+                messageStatus:true
+            });
+            setTimeout(() => {
+                this.setState({ messageStatus: false });
+                this.props.history.push("/manageemployees")
+              }, 3000);
         })
     }
 
@@ -81,14 +147,77 @@ export default class AddEmployee extends Component{
             pcName:"pc01"
         }
         EmployeeLogService.EmployeeAddedLog(EmployeeLog)
+        .then(response => {
+
+        })
+    };
+
+    UpdateEmployee = (event) =>{
+        event.preventDefault();
+
+        this.state.Emp.lastName !== this.state.lastname && (this.state.Changed.push("Last name"));
+        this.state.Emp.nic !== this.state.nic && (this.state.Changed.push("NIC"));
+        this.state.Emp.userName !== this.state.username && (this.state.Changed.push("User Name"));
+        this.state.Emp.branchId !== this.state.branchid && (this.state.Changed.push("Branch Id"));
+
+        let employee = {
+            id:this.state.id,
+            firstName : this.state.firstname,
+            middleName : this.state.middlename,
+            lastName : this.state.lastname,
+            nic : this.state.nic,
+            email : this.state.email,
+            gender : this.state.gender,
+            dateOfBirth : this.state.dob,
+            userName : this.state.username,
+            joinedDate : this.state.datejoined,
+            joinedPosition : this.state.joinedposition,
+            branchId : this.state.branchid,
+            companyId : this.state.companyid,
+            report : this.state.Reports,
+            doorNumber : this.state.doornumber,
+            streetName : this.state.streetname,
+            city : this.state.city,
+            landlineNumber : this.state.landlinenumber,
+            mobileNumber : this.state.mobilenumber,
+            nameofImmidiateContact : this.state.emergencyContactname,
+            immidiateContactnumber : this.state.emergencyContactmobilenumber,
+            relationshipwithImmidiateContact : this.state.relationshiptoecp,
+
+        };
+
+        EmployeeService.addEmployee(employee)
+        .then(res => {
+            this.updateEmployeeLog();
+            this.setState({
+                messageStatus:true
+            });
+            setTimeout(() => {
+                this.setState({ messageStatus: false });
+                this.props.history.push("/manageemployees")
+              }, 3000);
+        })
+    }
+
+    updateEmployeeLog = (e) => {
+        let EmployeeLog = {
+            description:"Employee "+this.state.Changed+" has been updated",
+            function:"Updating Employee",
+            userId:1,
+            pcName:"pc01"
+        }
+        EmployeeLogService.EmployeeAddedLog(EmployeeLog)
         .then(response => {})
     };
 
     render(){
         return(
             <>
-            <h3>Add Employee</h3>
-            <form onSubmit={this.addEmployee}>
+            {this.state.update ? 
+            (<h3>Update Employee</h3>)
+            :
+            (<h3>Add Employee</h3>)}
+            <form>
             <div className="row">
             <div className="col-sm">
             <label>First Name</label>
@@ -296,9 +425,19 @@ export default class AddEmployee extends Component{
             </div>
             </div>
             <div>
-                <button type="submit" className="btn btn-success">Add Employee</button>&nbsp;&nbsp;
+                {this.state.update ? 
+                (<button className="btn btn-success" onClick={this.UpdateEmployee}>Update Employee</button>)
+                :
+                (<button className="btn btn-success" onClick={this.addEmployee}>Add Employee</button>)}
+                &nbsp;&nbsp;
                 <button className="btn btn-danger">Cancel</button>
-            </div>
+            </div><br/><br/>
+
+            {this.state.messageStatus && (
+                <div class="alert alert-success" role="alert">
+                    {this.state.message}
+                </div>
+            )}
             </form>  
             </>
         );

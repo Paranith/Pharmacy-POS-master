@@ -20,7 +20,9 @@ export default class AddThirdCategory extends Component{
             status:1,
             cat02Id:0,
             Cat02:[],
-            update:false
+            update:false,
+            messageStatus:false,
+            message:""
         }
     }
 
@@ -41,7 +43,12 @@ export default class AddThirdCategory extends Component{
 
         if(path == "/updateCat03/" +Cat03Id){
             this.setState({
-                update:true
+                update:true,
+                message : "Third category updated successfully"
+            })
+        }else {
+            this.setState({
+                message : "Third category added successfully"
             })
         }
 
@@ -77,6 +84,13 @@ export default class AddThirdCategory extends Component{
         Cat03Service.addCat03(Cat03)
         .then(res => {
             this.addCat03Log();
+            this.setState({
+                messageStatus:true
+            });
+            setTimeout(() => {
+                this.setState({ messageStatus: false });
+                this.props.history.push("/manageThirdCategory")
+              }, 3000);
         })
     }
 
@@ -155,7 +169,12 @@ export default class AddThirdCategory extends Component{
                 (<button type="submit" className="btn btn-success">Add</button>)
                 }
                  &nbsp;
-                <button className="btn btn-danger">Cancel</button>
+                <button className="btn btn-danger">Cancel</button><br/><br/>
+                {this.state.messageStatus && (
+                    <div className="alert alert-success" role="alert">
+                        {this.state.message}
+                    </div>
+                )}
             </form>
             </div>
             </>
