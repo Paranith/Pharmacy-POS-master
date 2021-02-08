@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ItemLogService from '../../Service/ActivityLog/ItemLogService';
 import Cat01Service from '../../Service/Categories/Cat01Service';
 import Cat02Service from '../../Service/Categories/Cat02Service';
 import ItemService from '../../Service/ItemService';
@@ -32,10 +33,12 @@ export default class AddItem extends Component {
             Unit:[],
             cat01Id:0,
             cat02Id:0,
+            changed:[],
             messageStatus:false,
             message:"",
             Item:[],
-            update:false
+            update:false,
+            item:[]
         }
     }
 
@@ -54,15 +57,19 @@ export default class AddItem extends Component {
             })
         ))
 
-        // const ItemId = this.props.match.params.id;
-        // if(ItemId){
-        //     this.loadItem(ItemId);
-        // }
 
         const path = window.location.pathname;
         const ItemId = this.props.match.params.id;
         if(path == "/updateItems/" + ItemId){
             this.loadItem(ItemId);
+            this.setState({
+                update:true,
+                message:"Item updated successfully"
+            })
+        }else{
+            this.setState({
+                message : "Item added successfully"
+            })
         }
    
     }
@@ -71,30 +78,29 @@ export default class AddItem extends Component {
         ItemService.getItemById(ItemId)
         .then((res) => {
             let item = res.data;
-            // console.log(item.itemName);
-            this.setState = ({
+            this.setState({
+                item:item,
                 id:item.id,
-                // cat01Id:item.cat01Id,
-                // cat02Id:item.cat02Id,
-                // cat03Id:item.cat03Id,
-                // barcode:item.barcode,
+                cat01Id:item.cat01Id,
+                cat02Id:item.cat02Id,
+                cat03Id:item.cat03Id,
+                barcode:item.barcode,
                 itemName:item.itemName,
-                // description:item.descritpion,
-                // reorderQty:item.reorderQty,
-                // minQty:item.minQty,
-                // maxQty:item.maxQty,
-                // brandName:item.brandName,
-                // unitType:item.unitType,
-                // numberofItems:item.numberofItems,
-                // manufacturerName:item.manufacturerName,
-                // status:item.status,
-                // userId:item.userId,
-                // date:item.date,
-                // storeid:item.storeid,
-                
+                description:item.description,
+                reorderQty:item.reorderQty,
+                minQty:item.minQty,
+                maxQty:item.maxQty,
+                brandName:item.brandName,
+                unitType:item.unitType,
+                numberofItems:item.numberofItems,
+                manufacturerName:item.manufacturerName,
+                status:item.status,
+                userId:item.userId,
+                date:item.date,
+                storeid:item.storeid,
             })
         })
-        
+
     }
 
     onChangeValue = name => (e) => {
@@ -142,6 +148,7 @@ export default class AddItem extends Component {
         }
         ItemService.addItem(Item)
         .then(res => {
+            this.addItemLog();
             this.setState({
                 message:true
             });
@@ -152,13 +159,88 @@ export default class AddItem extends Component {
         })
     }
 
+    addItemLog = (e) => {
+        let ItemLog = {
+            description : "Item " + this.state.itemName + " has been added",
+            function:"Adding Item",
+            userId:1,
+            pcName:"pc01"
+        }
+        ItemLogService.ItemLog(ItemLog)
+        .then(response => {})
+    };
+
+    updateItem = (e) => {
+        e.preventDefault();
+
+        if(this.state.item.itemName !== this.state.itemName){
+            this.state.changed.push("Item Name")
+        }
+        if(this.state.item.description !== this.state.description){
+            this.state.changed.push("Description")
+        }
+        if(this.state.item.numberofItems !== this.state.numberofItems){
+            this.state.changed.push("Number of items")
+        }
+        if(this.state.item.storeid !== this.state.storeid){
+            this.state.changed.push("Store Id")
+        }
+
+        let Item = {
+            id:this.state.id,
+            cat01Id:this.state.cat01Id,
+            cat02Id:this.state.cat02Id,
+            cat03Id:this.state.cat03Id,
+            barcode:this.state.barcode,
+            itemName:this.state.itemName,
+            description:this.state.description,
+            reorderQty:this.state.reorderQty,
+            minQty:this.state.minQty,
+            maxQty:this.state.maxQty,
+            brandName:this.state.brandName,
+            unitType:this.state.unitType,
+            numberofItems:this.state.numberofItems,
+            manufacturerName:this.state.manufacturerName,
+            status:true,
+            userId:this.state.userId,
+            date:this.state.date,
+            storeid:this.state.storeid
+        }
+        ItemService.addItem(Item)
+        .then(res => {
+            this.updateItemLog();
+            this.setState({
+                message:true
+            });
+            setTimeout(() => {
+                this.setState({ message: false });
+                this.props.history.push("/manageitems")
+              }, 3000);
+        })
+    }
+
+    updateItemLog = (e) => {
+        let ItemLog = {
+            description : "Item " + this.state.changed + " has been updated",
+            function:"Updating Item",
+            userId:1,
+            pcName:"pc01"
+        }
+        ItemLogService.ItemLog(ItemLog)
+        .then(response => {})
+    };
+
     render(){
-        // const {cat01Id,cat02Id,cat03Id,barcode,description,reorderQty,
-        // minQty,maxQty,brandName,unitType,numberofItems,manufacturerName,status,
-        // userId,date,storeid,cat01,cat02,Unit,message} = this.state;
         return(
             <>
-            <h3>Add Item</h3>
+            {this.state.update ? 
+            (
+                <h3>Update item</h3>
+            )
+            :
+            (
+                <h3>Add Item</h3>
+            )}
             <div className="row">
             <div className="col-sm">
             
@@ -342,10 +424,17 @@ export default class AddItem extends Component {
                 </select><br/> <br/>
 
                 <div>
-                    <button className="btn btn-success" onClick={this.saveItem}>Add</button> &nbsp;
+                    {this.state.update ? 
+                    (
+                        <button className="btn btn-success" onClick={this.updateItem}>Update</button> 
+                    )
+                    :
+                    (
+                        <button className="btn btn-success" onClick={this.saveItem}>Add</button> 
+                    )}&nbsp;
                     <button className="btn btn-danger">Cancel</button>
                 </div><br/>
-                {this.state.message && (
+                {this.state.messageStatus && (
                 <div class="alert alert-success" role="alert">
                     Item has been added successfully!.
                 </div>)}

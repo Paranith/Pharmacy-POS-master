@@ -65,6 +65,12 @@ export default [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Add Supplier',
+    to: '/addsupplier',
+    icon: 'cil-speedometer',
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Dashboard',
     to: '/dashboard',
     icon: 'cil-speedometer',

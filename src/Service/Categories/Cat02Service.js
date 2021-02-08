@@ -17,4 +17,4 @@ class Cat02Service {
     }
 }
 
-export default new Cat02Service;
+export default new Cat02Service();

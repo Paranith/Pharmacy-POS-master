@@ -12,4 +12,4 @@ class Cat01{
     }
 }
 
-export default new Cat01;
+export default new Cat01();
