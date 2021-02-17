@@ -121,14 +121,14 @@ export default class AddThirdCategory extends Component{
                 <div align="center">
                 {this.state.update ? 
                 (
-                    <h3>Update Category 03 (Third Category)</h3>
+                    <h3><u>Update Category 03 (Third Category)</u></h3>
                 )
                 :
                 (
-                    <h3>Add New Category 03 (Third Category)</h3>
+                    <h3><u>Add New Category 03 (Third Category)</u></h3>
                 )}
                 <br/><br/>
-                <form onSubmit={this.saveCategory03}>
+                <form>
                 <div>  
                 <label>Select the Secondary category here :</label> &nbsp;
                 <select 
@@ -163,19 +163,20 @@ export default class AddThirdCategory extends Component{
                 value={this.state.catthreeDescription}
                 onChange={this.onChangeValue("catthreeDescription")}
                 /><br/>
-                {this.state.update ? 
-                (<button type="submit" className="btn btn-success">Update</button>)
+                
+            </form>
+            {this.state.update ? 
+                (<button type="submit" className="btn btn-success" onClick={this.saveCategory03}>Update</button>)
                 :
-                (<button type="submit" className="btn btn-success">Add</button>)
+                (<button type="submit" className="btn btn-success" onClick={this.saveCategory03}>Add</button>)
                 }
                  &nbsp;
-                <button className="btn btn-danger">Cancel</button><br/><br/>
+                <a href="/manageThirdCategory"><button className="btn btn-danger">Cancel</button></a><br/><br/>
                 {this.state.messageStatus && (
                     <div className="alert alert-success" role="alert">
                         {this.state.message}
                     </div>
                 )}
-            </form>
             </div>
             </>
         );

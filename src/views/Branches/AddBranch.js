@@ -175,15 +175,16 @@ export default class AddBranch extends Component {
             <>
             <form>
             {this.state.update ? 
-            (<h3>Update Branch</h3>)
+            (<h3><u>Update Branch</u></h3>)
             :
-            (<h3>Add New Branch</h3>)}
+            (<h3><u>Add New Branch</u></h3>)}
             <div className="row">
             <div className="col-sm">
                 <label>Name</label>
                 <input
                     className="form-control"
                     type="text"
+                    required
                     style={{ padding: 5, width: "85%" }}
                     value={this.state.name}
                     onChange={this.onChangeValue("name")}
@@ -191,6 +192,7 @@ export default class AddBranch extends Component {
 
                 <label>Mobile Number</label>
                 <input
+                    required
                     className="form-control"
                     type="text"
                     style={{ padding: 5, width: "85%" }}
@@ -200,6 +202,7 @@ export default class AddBranch extends Component {
 
                 <label>Code</label>
                 <input
+                    required
                     className="form-control"
                     type="text"
                     style={{ padding: 5, width: "85%" }}
@@ -247,11 +250,13 @@ export default class AddBranch extends Component {
                 /><br />
             </div>
             </div>
+            
+            </form>
             <div style={{ padding: 20, marginTop: 20 }}>
                 {this.state.update ?
                 (<button type="submit" className="btn btn-success" onClick={this.UpdateBranch}>Update</button>):
                     (<button type="submit" className="btn btn-success" onClick={this.AddBranch}>Add</button>)}&nbsp;&nbsp;
-                    <button className="btn btn-danger">Cancel</button>
+                    <a href="/managebranches"><button className="btn btn-danger">Cancel</button></a>
             </div>
             <br/><br/>
             {this.state.messageStatus && (
@@ -260,7 +265,6 @@ export default class AddBranch extends Component {
                 </div>
             )}
             <br/><br/>
-            </form>
             <ManageBranches/>
             </>
         );

@@ -77,7 +77,7 @@ export default class AddSupplier extends Component{
                     </div>
                 )}
             <form>
-            <h3>Add supplier</h3>
+            <h3><u>Add supplier</u></h3>
             <div className="row">
                 <div className="col-sm">
             <label>Shop name</label>
@@ -136,12 +136,12 @@ export default class AddSupplier extends Component{
                 />
                 </div>
                 </div> <br/><br/>
-                <div>
-                    <button type="submit" className="btn btn-success" onClick={this.saveSupplier}>Add</button> &nbsp;&nbsp;
-                    <button className="btn btn-danger">Cancel</button>
-                </div><br/><br/>
                 
                 </form>
+                <div>
+                    <button type="submit" className="btn btn-success" onClick={this.saveSupplier}>Add</button> &nbsp;&nbsp;
+                    <a href="/manageSupplier"><button className="btn btn-danger">Cancel</button></a>
+                </div>
             </>
 
             

@@ -73,6 +73,7 @@ export default class ManageSupplier extends Component{
         const {tableData} = this.state;
         return(
             <>
+            <h3><u>Manage Supplier</u></h3>
             <table class="table table-bordered table" >
                 <tr>
                     <th>Shop Name</th>

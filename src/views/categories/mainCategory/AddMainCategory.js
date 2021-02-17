@@ -148,10 +148,10 @@ export default class AddCategory01 extends Component{
             <div align="center">
             <form>
                 {this.state.update ? 
-                (<h3>Update Category 01(Main Category)</h3>)
+                (<h3><u>Update Category 01(Main Category)</u></h3>)
                 :
                 (
-                    <h3>Add New Category 01 (Main Category)</h3>
+                    <h3><u>Add New Category 01 (Main Category)</u></h3>
                 )}<br/>
                 <label>Name</label>
                 <input
@@ -169,19 +169,20 @@ export default class AddCategory01 extends Component{
                 value={this.state.catoneDescription}
                 onChange={this.onChangeValue("catoneDescription")}
                 /><br/>
-                {this.state.update ? 
+                
+            </form>
+            {this.state.update ? 
                 (<button type="submit" className="btn btn-info" onClick={this.UpdateCategory}>Update</button>)
                 :
                 (
                     <button type="submit" className="btn btn-success" onClick={this.saveCategory}>Add</button> 
                 )}&nbsp;
-                <button className="btn btn-danger">Cancel</button>
+                <a href="/managemaincategory"><button className="btn btn-danger">Cancel</button></a>
                 {this.state.messageStatus && (
                     <div className="alert alert-success" role="alert">
                     {this.state.message}
                 </div>
                 )}
-            </form>
             </div><br/><br/>
             
             </>

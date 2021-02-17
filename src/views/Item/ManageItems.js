@@ -82,6 +82,7 @@ export default class ManageItems extends Component {
         const {Items,tableData} = this.state;
         return(
             <>
+            <h3><u>Manage Items</u></h3>
                 <table class="table table-bordered table" style={style.table}>
                     <tr>
                         <th>Item Name</th>

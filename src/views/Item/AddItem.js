@@ -235,12 +235,13 @@ export default class AddItem extends Component {
             <>
             {this.state.update ? 
             (
-                <h3>Update item</h3>
+                <h3><u>Update item</u></h3>
             )
             :
             (
-                <h3>Add Item</h3>
+                <h3><u>Add Item</u></h3>
             )}
+            <form>
             <div className="row">
             <div className="col-sm">
             
@@ -422,6 +423,9 @@ export default class AddItem extends Component {
                         <option value={row.unitId}>{row.unitType}</option>
                     ))}
                 </select><br/> <br/>
+                </div>
+                </div>
+                </form>
 
                 <div>
                     {this.state.update ? 
@@ -432,15 +436,14 @@ export default class AddItem extends Component {
                     (
                         <button className="btn btn-success" onClick={this.saveItem}>Add</button> 
                     )}&nbsp;
-                    <button className="btn btn-danger">Cancel</button>
+                    <a href="/manageitems"><button className="btn btn-danger">Cancel</button></a>
                 </div><br/>
                 {this.state.messageStatus && (
                 <div class="alert alert-success" role="alert">
                     Item has been added successfully!.
                 </div>)}
                 
-            </div>
-            </div>
+            
             </>
         );
     }

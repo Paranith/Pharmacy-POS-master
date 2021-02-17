@@ -191,7 +191,7 @@ export default class SecondCategory extends Component {
         })
         return(
             <>
-            <h3>Secondary Category</h3>
+            <h3><u>Secondary Category</u></h3>
             <a href="/addsecondcategory"><button className="btn btn-primary" style={{marginLeft:"40%"}}>Add New Secondary Category</button></a>
             <br/><br/>
             <div>

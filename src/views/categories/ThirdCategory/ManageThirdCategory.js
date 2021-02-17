@@ -142,7 +142,7 @@ export default class ThirdCategory extends Component {
         })
         return(
             <>
-            <h3>Third Category</h3>
+            <h3><u>Third Category</u></h3>
             <a href="/addthirdcategory"><button className="btn btn-primary" style={{marginLeft:"40%"}}>Add New Third Category</button></a>
             <br/><br/>
             <div className="row">

@@ -59,7 +59,7 @@ export default class AddCompany extends Component {
     render() {
         return (
             <>
-                <form onSubmit={this.addCompany}>
+                <form>
                     <h3><u>Manage Company</u></h3> <br />
                     <div className="row">
                         <div className="col-sm">
@@ -161,21 +161,14 @@ export default class AddCompany extends Component {
                                 value={this.state.ownerNic}
                                 onChange={this.onChangeValue("ownerNic")}
                             />
-
-                            <div style={{ padding: 20, marginTop: 20 }}>
-                                <button type="submit" className="btn btn-success">Save</button>&nbsp;&nbsp;
-                                <button className="btn btn-info">Update</button>&nbsp;&nbsp;
-                                <button className="btn btn-danger">Cancel</button>
-                            </div>
-
                         </div>
-
                     </div>
-
-
-
                 </form>
-
+                <div style={{ padding: 20, marginTop: 20 }}>
+                                <button type="submit" className="btn btn-success" onClick={this.addCompany}>Save</button>&nbsp;&nbsp;
+                                <button className="btn btn-info">Update</button>&nbsp;&nbsp;
+                                <a href="/"><button className="btn btn-danger">Cancel</button></a>
+                </div>
             </>
         );
 

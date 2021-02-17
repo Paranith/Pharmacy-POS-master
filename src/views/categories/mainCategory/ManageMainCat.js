@@ -200,7 +200,7 @@ export default class ManageMainCat extends Component{
 
         return(
             <>
-            <h3>Main Categories</h3>
+            <h3><u>Main Categories</u></h3>
             <div style={{marginLeft:"40%"}}>
             <a href="/addMainCategory"><button class="btn btn-primary">Add New Main Category</button></a></div> <br/> <br/>
             <div>

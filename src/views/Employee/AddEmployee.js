@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import BranchLogService from '../../Service/ActivityLog/BranchLogService';
 import EmployeeLogService from '../../Service/ActivityLog/EmployeeLogService';
+import CompanyService from '../../Service/CompanyService';
 import EmployeeService from '../../Service/EmployeeService';
+import branchService from '../../Service/BranchService';
 
 export default class AddEmployee extends Component{
     constructor(){
@@ -34,7 +35,9 @@ export default class AddEmployee extends Component{
             Emp:[],
             Changed:[], 
             message:"",
-            messageStatus:false
+            messageStatus:false,
+            company:[],
+            branch:[]
         }
     }
 
@@ -56,6 +59,21 @@ export default class AddEmployee extends Component{
                 message : "Employee added successfully"
             })
         }
+
+        CompanyService.getAllCompany()
+        .then(res => {
+            this.setState({
+                company : res.data
+            })
+        })
+
+        branchService.getAllBranches()
+        .then(res => {
+            this.setState({
+                branch : res.data
+            })
+        })
+
     }
 
     loadEmployee = (EmpId) => {
@@ -214,9 +232,9 @@ export default class AddEmployee extends Component{
         return(
             <>
             {this.state.update ? 
-            (<h3>Update Employee</h3>)
+            (<h3><u>Update Employee</u></h3>)
             :
-            (<h3>Add Employee</h3>)}
+            (<h3><u>Add Employee</u></h3>)}
             <form>
             <div className="row">
             <div className="col-sm">
@@ -321,24 +339,6 @@ export default class AddEmployee extends Component{
 
             <div className="col-sm">
 
-            <label>Branch Id</label>
-                <input
-                    className="form-control"
-                    type="text"
-                    style={{ padding: 5, width: "85%" }}
-                    value={this.state.branchid}
-                    onChange={this.onChangeValue("branchid")}
-                /> <br/>
-
-            <label>Company Id</label>
-                <input
-                    className="form-control"
-                    type="text"
-                    style={{ padding: 5, width: "85%" }}
-                    value={this.state.companyid}
-                    onChange={this.onChangeValue("companyid")}
-                /> <br/>
-
             <label>Reports</label>
                 <input
                     className="form-control"
@@ -422,15 +422,42 @@ export default class AddEmployee extends Component{
                     value={this.state.relationshiptoecp}
                     onChange={this.onChangeValue("relationshiptoecp")}
                 /> <br/>
+            
+            <label>Branch  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                <select 
+                class="btn btn-info dropdown-toggle"
+                value={this.state.branchid}
+                onChange={this.onChangeValue("branchid")}
+                style={{width:150}}
+                >
+                    <option value="0">Select</option>
+                    {this.state.branch.map((row)=>(
+                        <option value={row.id}>{row.branchName}</option>
+                    ))}
+                </select><br/><br/>
+
+                <label>Company  :&nbsp;&nbsp; </label>
+                <select 
+                class="btn btn-info dropdown-toggle"
+                value={this.state.companyid}
+                onChange={this.onChangeValue("companyid")}
+                style={{width:150}}
+                >
+                    <option value="0">Select</option>
+                    {this.state.company.map((row)=>(
+                        <option value={row.id}>{row.companyName}</option>
+                    ))}
+                </select><br/><br/>
             </div>
             </div>
+            </form>  
             <div>
                 {this.state.update ? 
                 (<button className="btn btn-success" onClick={this.UpdateEmployee}>Update Employee</button>)
                 :
                 (<button className="btn btn-success" onClick={this.addEmployee}>Add Employee</button>)}
                 &nbsp;&nbsp;
-                <button className="btn btn-danger">Cancel</button>
+                <a href="/manageemployees"><button className="btn btn-danger">Cancel</button></a>
             </div><br/><br/>
 
             {this.state.messageStatus && (
@@ -438,7 +465,6 @@ export default class AddEmployee extends Component{
                     {this.state.message}
                 </div>
             )}
-            </form>  
             </>
         );
     }
