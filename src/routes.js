@@ -52,6 +52,7 @@ const AddThirdCategory = React.lazy(() => import('./views/categories/ThirdCatego
 const AddItem = React.lazy(() => import('./views/Item/AddItem'));
 const ManageItems = React.lazy(() => import("./views/Item/ManageItems"));
 const AddSupplier = React.lazy(() => import('./views/Suppliers/AddSupplier'));
+const ManageSupplier = React.lazy(()=> import('./views/Suppliers/ManageSupllier'));
 
 
 const routes = [
@@ -77,6 +78,7 @@ const routes = [
   { path: '/manageitems', name: 'Manage Items', component: ManageItems },
   { path: '/updateItems/:id', name: 'Update Items', component: AddItem },
   { path: '/addsupplier', name:'Add Supplier', component: AddSupplier },
+  { path: '/manageSupplier', name:'Manage Supplier', component: ManageSupplier },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

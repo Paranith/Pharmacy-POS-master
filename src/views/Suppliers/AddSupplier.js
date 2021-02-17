@@ -5,7 +5,7 @@ import SupplierService from '../../Service/SupplierService'
 
 const style = {
     textbox : {
-        width:300
+        width:"85%"
     }
 }
 
@@ -71,6 +71,11 @@ export default class AddSupplier extends Component{
     render(){
         return(
             <>
+            {this.state.messageStatus && (
+                    <div className="alert alert-success" role="alert" style={{position:"fixed",marginLeft:"10%"}}>
+                        <strong>Supplier has been added</strong>
+                    </div>
+                )}
             <form>
             <h3>Add supplier</h3>
             <div className="row">
@@ -135,11 +140,7 @@ export default class AddSupplier extends Component{
                     <button type="submit" className="btn btn-success" onClick={this.saveSupplier}>Add</button> &nbsp;&nbsp;
                     <button className="btn btn-danger">Cancel</button>
                 </div><br/><br/>
-                {this.state.messageStatus && (
-                    <div className="alert alert-success" role="alert">
-                        <strong>Supplier has been added</strong>
-                    </div>
-                )}
+                
                 </form>
             </>
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import EmployeeService from '../../Service/EmployeeService';
+import ReactPaginate from 'react-paginate';
+import '../../scss/Pagination.css'
 
 
 
@@ -9,18 +11,69 @@ export default class ManageEmployee extends Component{
 
         this.state = {
             employees : [],
-            search:""
+            search:"",
+            offset:0,
+            perPage:5,
+            orgtableData: [],
+            tableData: [],
+            currentPage:0,
+            pageCount:0
         }
     }
 
 
     componentDidMount(){
+        this.getAllEmployees();
+    }
+
+    getAllEmployees(){
         EmployeeService.getAllEmployees()
         .then((res) => {
             this.setState({
                 employees:res.data
             })
+
+            var data = res.data;
+
+            var slice = data.slice(this.state.offset,this.state.offset + this.state.perPage)
+
+            this.setState({
+                pageCount: Math.ceil(data.length / this.state.perPage),
+                orgtableData : res.data,
+                tableData:slice
+            })
         })
+    }
+
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.perPage;
+
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            this.loadMoreData()
+        });
+
+    };
+
+    loadMoreData() {
+		const data = this.state.orgtableData;
+		
+		const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+		this.setState({
+			pageCount: Math.ceil(data.length / this.state.perPage),
+			tableData:slice
+		})
+	
+    };
+
+    onChangeperpage = (e) => {
+        this.setState({
+            perPage : e.target.value
+        });
+        this.getAllEmployees();
     }
 
     onchangeSearch = e => {
@@ -30,8 +83,8 @@ export default class ManageEmployee extends Component{
 
     render(){
 
-        const {search,employees} = this.state;
-        const filteremployees = employees.filter( row => {
+        const {search,employees,tableData} = this.state;
+        const filteremployees = tableData.filter( row => {
             return row.userName.indexOf( search ) !== -1
         })
 
@@ -99,6 +152,31 @@ export default class ManageEmployee extends Component{
                         </tr>
                     ))}
                 </table>
+                <div className="row">
+                <div className="col-sm">
+                <ReactPaginate
+                    previousLabel={"prev"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}/>
+                    </div> 
+                    &nbsp;
+                    <div className="col-sm">
+                        <span>Rows per page : &nbsp;</span>
+                <select value={this.state.perPage} onChange={this.onChangeperpage} class="btn btn-info dropdown-toggle">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+                </div>
+                </div>
             </div>
             </>
         );

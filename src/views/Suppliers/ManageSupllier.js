@@ -1,35 +1,31 @@
 import React, { Component } from 'react'
-import BranchService from '../../Service/BranchService';
+import SupplierService from '../../Service/SupplierService';
 import ReactPaginate from 'react-paginate';
 import '../../scss/Pagination.css'
 
-export default class ManageBranches extends Component {
+export default class ManageSupplier extends Component{
     constructor(){
         super();
 
-        this.state={
-            branches:[],
-            search:"",offset:0,
+        this.state = {
+            Supplier : [],
+            offset:0,
             perPage:5,
             orgtableData: [],
             tableData: [],
             currentPage:0,
             pageCount:0
-            // status:false
         }
     }
 
     componentDidMount(){
-        this.getAllBranches();
+        this.getAllSupplier();
     }
 
-    getAllBranches(){
-        BranchService.getAllBranches()
-        .then((res) => {
-            this.setState({
-                branches:res.data
-            })
 
+    getAllSupplier(){
+        SupplierService.getAllSuppliers()
+        .then(res => {
             var data = res.data;
 
             var slice = data.slice(this.state.offset,this.state.offset + this.state.perPage)
@@ -70,65 +66,34 @@ export default class ManageBranches extends Component {
         this.setState({
             perPage : e.target.value
         });
-        this.getAllBranches();
-    }
-
-    onchangeSearch = e => {
-        this.setState({ search : e.target.value})
+        this.getAllSupplier();
     }
 
     render(){
-
-        const {search,branches,tableData} = this.state;
-        const filterbranches = tableData.filter( row => {
-            return row.branchName.indexOf( search ) !== -1
-        })
-
+        const {tableData} = this.state;
         return(
             <>
-            <div><br/>
-            <h3><u>Manage branches</u></h3><br/>
-            <div className="row">
-                <input
-                type="text"
-                value={search}
-                onChange={this.onchangeSearch}
-                placeholder="Search Branch By Name"
-                className="form-control"
-                style={{width:300}}
-                />&nbsp;&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="30" fill="currentColor" class="bi bi-search" viewBox="0 0 16 5">
-                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                </svg> </div>
-                <br/><br/>
-            <table class="table table-bordered table">
-                <thead>
-                    <tr>
-                    <th>Name</th>
-                    <th>Mobile Number</th>
-                    <th>Door No</th>
-                    <th>Street Name</th>
+            <table class="table table-bordered table" >
+                <tr>
+                    <th>Shop Name</th>
+                    <th>Contact Person</th>
+                    <th>Contact Number</th>
+                    <th>Address</th>
                     <th>City</th>
-                    <th>Code</th>
-                    <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filterbranches.map((row) => (
+                    <th>Email</th>
+                </tr>
+                {tableData.map((row) => (
                         <tr key={row.id}>
-                            <td>{row.branchName}</td>
-                            <td>{row.mobile}</td>
-                            <td>{row.addr1}</td>
-                            <td>{row.addr2}</td>
-                            <td>{row.addr3}</td>
-                            <td>{row.code}</td>
-                            <td><a href={"/updateBranch/"+row.id}><button  className="btn btn-success">Edit</button></a></td>
+                        <td>{row.shopName}</td>
+                        <td>{row.contactperson}</td>
+                        <td>{row.contactNumber}</td>
+                        <td>{row.address}</td>
+                        <td>{row.city}</td>
+                        <td>{row.email}</td>
+                        {/* <td><a href={"/updateItems/"+row.id}><button  className="btn btn-success">Edit</button></a></td> */}
 
                         </tr>
                     ))}
-                    
-                </tbody>
             </table>
             <div className="row">
                 <div className="col-sm">
@@ -155,7 +120,6 @@ export default class ManageBranches extends Component {
                 </select>
                 </div>
                 </div>
-            </div>
             </>
         );
     }

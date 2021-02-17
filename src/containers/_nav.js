@@ -31,7 +31,7 @@ export default [
   },
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Manage Categories',
+    name: 'Categories',
     icon: 'cil-puzzle',  
      _children: [     
     {
@@ -67,6 +67,12 @@ export default [
     _tag: 'CSidebarNavItem',
     name: 'Add Supplier',
     to: '/addsupplier',
+    icon: 'cil-speedometer',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Manage Supplier',
+    to: '/manageSupplier',
     icon: 'cil-speedometer',
   },
   {

@@ -4,7 +4,7 @@ import Cat01Service from '../../../Service/Categories/Cat01Service';
 
 const style = {
     textbox : {
-        width:300
+        width:400
     }
 }
 
@@ -63,7 +63,6 @@ export default class AddCategory01 extends Component{
         this.setState({
             [name]: e.target.value
         });
-        console.log("name ", name);
     }
 
     saveCategory= (event) =>{
@@ -146,14 +145,14 @@ export default class AddCategory01 extends Component{
     render(){
         return(
             <>
-            <div>
+            <div align="center">
             <form>
                 {this.state.update ? 
                 (<h3>Update Category 01(Main Category)</h3>)
                 :
                 (
                     <h3>Add New Category 01 (Main Category)</h3>
-                )}
+                )}<br/>
                 <label>Name</label>
                 <input
                 required

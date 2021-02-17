@@ -5,7 +5,7 @@ import Cat02Service from '../../../Service/Categories/Cat02Service';
 
 const style = {
     textbox : {
-        width:300
+        width:400
     }
 }
 
@@ -110,7 +110,7 @@ export default class AddSecondCategory extends Component {
         const {Cat01} = this.state
         return(
             <>
-            <div>
+            <div align="center">
             <form onSubmit={this.saveCategory02}>
                 {this.state.update ? 
                 (<h3>Update Category 02 (Secondary Category)</h3>)
@@ -118,7 +118,7 @@ export default class AddSecondCategory extends Component {
                 (<h3>Add New Category 02 (Secondary Category)</h3>)}
                 <br/>
                 <div>
-                <label><b>Select the main category here :</b></label> &nbsp;
+                <label>Select the main category here :</label> &nbsp;
                 <select 
                 class="btn btn-info dropdown-toggle"
                 value={this.state.cat01Id}
